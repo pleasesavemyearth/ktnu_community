@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* .link {
+    border: 1px solid salmon;
+} */
+
+/* 헤더부분에 외부링크로 이동하는 텍스트들 */
+.link a {
+    /* float: right; */
+    text-decoration: none;
+    color: black;
+}
+
+/* navbar container */
+.navbar {
+    overflow: hidden;
+    background-color: brown;
+}
+
+/* navbar에 있는 링크들 */
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* dropdown container */
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+/* dropdown button */
+.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    margin: 0;
+}
+
+/* dropdown-content는 기본적으로 숨겨짐 */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: brown;
+    min-width: 160px;
+    z-index: 1;
+}
+
+/* dropdown 에 있는 링크들 */
+.dropdown-content a {
+    float: none;
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+/* hover시 dropdown menu 보이도록 */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+input[type=text], input[type=password] {
+    width: 150px;
+    padding: 5px 10px;
+    margin: 8px 0; 
+    display: inline-block;
+    border: 1px solid gainsboro;
+}
+
