@@ -1,6 +1,6 @@
 <?php
 require "../util/dbconfig.php";
-
+$dbname = "ktnu";
 // create user
 // 0. 만약 같은 사용자 계정이 있으면 삭제
 $sql = "DROP USER IF EXISTS ".$dbname;

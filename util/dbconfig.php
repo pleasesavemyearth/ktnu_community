@@ -15,3 +15,4 @@ if($conn->connect_error) {
 }
 echo "<script>alert('DB connected successfully')</script>";
 ?>
+

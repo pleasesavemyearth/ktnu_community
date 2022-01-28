@@ -1,6 +1,9 @@
 <?php
 require "../util/dbconfig.php";
 
+$sql = "use " .$dbname;
+$conn->query($sql);
+
 // create tbl
 $sql = "DROP TABLE IF EXISTS free_board"; 
 $conn->query($sql);
