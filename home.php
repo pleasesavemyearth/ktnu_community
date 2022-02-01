@@ -13,17 +13,17 @@ require_once './util/loginchk.php';
     <title>ktnu-people</title>
 </head>
 <body>
-      <!-- header -->
+      <!---------- header ---------->
         <!-- logo -->
         <a href="#"><img src="../img/cat.jpg" width="150" height="70"></a>
 
         <!-- link -->
         <div class="link">
             <li><a href="#">한국교통대학교</a></li>
-            <a href="#">도서관</a>
-            <a href="#">통합정보시스템</a>
-            <a href="#">수강신청</a>
-            <a href="#">e-campus</a>
+            <li><a href="#">도서관</a></li>
+            <li><a href="#">통합정보시스템</a></li>
+            <li><a href="#">수강신청</a></li>
+            <li><a href="#">e-campus</a></li>
         </div>
 
         <!-- nav -->
@@ -32,7 +32,7 @@ require_once './util/loginchk.php';
                 <div class="dropdown">
                     <button class="dropbtn">커뮤니티</button>
                     <div class="dropdown-content">
-                        <a href="#">자유게시판</a>
+                        <a href="../free_board/free_list.php">자유게시판</a>
                         <a href="#">익명게시판</a>
                     </div>
                 </div>
@@ -52,8 +52,9 @@ require_once './util/loginchk.php';
                 </div>
         </div>
 
-      <!-- main -->
-        <!-- login -->
+      <!----------- main ---------->
+      <!---------- aside ---------->  
+      <!-- login -->
         <?php
         if(!$chk_login) { 
         ?>
@@ -79,13 +80,16 @@ require_once './util/loginchk.php';
             
             <?php
         } else {
-            echo $_SESSION['users_id']; ?> 님 환영합니다.
+            ?>
+            <div class=login_welcome>
+            <?=$_SESSION['users_id'];?> 님 환영합니다.
             <button type="button" value="logout" onclick="location.href='../users/logout_process.php'">로그아웃</button>
+            </div>
             <?php
         }
         ?>
 
-        <!-- 회원가입 modal -->
+        <!-- join modal -->
         <div id="modal">
 
         <div class="modal_content">
@@ -127,27 +131,95 @@ require_once './util/loginchk.php';
         <div class="modal_layer"></div>
         </div>
 
-        
+
+        <!-- article -->
+        <div class="notice_aritcle">
+            공지사항
+            <hr style="width:200px">
+            글내용1<br>
+            글내용1<br>
+            글내용1<br>
+            글내용1<br>
+            글내용1
+        </div>
+
+        <!-- 외부 이미지 링크 -->
+        <a href="https://ko-kr.facebook.com/knutpr/" target="_blank"><img src="./img/facebook_icon.PNG"></a>
+        <a href="https://www.instagram.com/best_knut/?hl=ko" target="_blank"><img src="./img/insta_icon.PNG"></a>
+
+        <!---------- content ---------->
         <!-- new_section  -->
         <!-- article -->
+        <span>
+        <br>최신글
+        <hr style="width:200px">
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        </span>
 
         <!-- hit_best_section -->
         <!-- article -->
+        <span>
+        조회수 BEST
+        <hr style="width:200px">
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        </span>
 
         <!-- thumb_up_best_section -->
         <!-- article -->
+        <span>
+        추천수 BEST
+        <hr style="width:200px">
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        </span>
 
         <!-- free_section -->
         <!-- article -->
+        <span>
+        자유게시판
+        <hr style="width:200px">
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        </span>
 
         <!-- secret_section -->
         <!-- article -->
+        <span>
+        익명게시판
+        <hr style="width:200px">
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        글내용1<br>
+        </span>
 
-        <!-- aside -->
-        <!-- article -->
-        <!-- 외부 이미지 링크 -->
 
-      <!-- footer -->
+      <!---------- footer ---------->
 
       <script src='./js/join.js'></script>
 </body>
