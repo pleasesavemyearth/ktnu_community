@@ -20,5 +20,11 @@ if($result->num_rows>0) {
 
 $conn->close();
 
+echo "<script>alert('회원가입 되었습니다.')</script>";
 header('Location: ../home.php');
 ?>
+<!-- 
+    문제
+    1. 이미 존재하는 id를 가입시킬 시, 가입은 안되지만 알림창이 안뜸
+    2. 회원가입 완료 후, 알림창 뜨게하려는데 안됨
+-->

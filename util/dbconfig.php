@@ -16,3 +16,8 @@ if($conn->connect_error) {
 echo "<script>alert('DB connected successfully')</script>";
 ?>
 
+<!--
+    문제 :
+    db생성 및 tbl생성 시 에러발생, 코드 수정 했으나 다시 확인하기
+
+-->

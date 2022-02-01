@@ -8,7 +8,8 @@
     border: 1px solid salmon;
 } */
 
-/* 헤더부분에 외부링크로 이동하는 텍스트들 */
+/* --------- navigation_bar --------- */
+/* 헤더에 외부링크로 이동하는 텍스트들 */
 .link a {
     /* float: right; */
     text-decoration: none;
@@ -72,7 +73,7 @@
     display: block;
 }
 
-
+/* --------- login --------- */
 input[type=text], input[type=password] {
     width: 150px;
     padding: 5px 10px;
@@ -81,3 +82,31 @@ input[type=text], input[type=password] {
     border: 1px solid gainsboro;
 }
 
+/* --------- join_modal --------- */
+/* 평소엔 모달창 숨김 */
+  #modal {
+    display:none;
+    position:relative;
+    width:100%;
+    height:100%;
+    z-index:1;
+  }
+  
+  /* 모달창 내부 */
+  #modal .modal_content {
+    width: 500px;
+    margin:100px auto;
+    padding:30px 40px;
+    background: rgb(238, 238, 238);
+  }
+  
+  /* 모달창 외부 */
+  #modal .modal_layer {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.5);
+    z-index:-1;
+  }   

@@ -1,3 +1,8 @@
+<?php
+require_once './util/utility.php';
+require_once './util/loginchk.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +19,7 @@
 
         <!-- link -->
         <div class="link">
-            <a href="#">한국교통대학교</a>
+            <li><a href="#">한국교통대학교</a></li>
             <a href="#">도서관</a>
             <a href="#">통합정보시스템</a>
             <a href="#">수강신청</a>
@@ -49,48 +54,79 @@
 
       <!-- main -->
         <!-- login -->
+        <?php
+        if(!$chk_login) { 
+        ?>
         <form action="./users/login_process.php" method="post">
-            <div class="container">
-                <input type="text" placeholder="아이디" name="users_id" required>
-                <input type="password" placeholder="비밀번호" name="users_pwd" required>
-                <button type="submit">로그인</button>
-                <label>
-                    <input type="checkbox" name="remember">로그인 유지</label>
-                </label>
-            </div>
-            <div class="container">
-                <span><a href="#">회원가입</a></span>
-                <span>&nbsp;|&nbsp;</span>
-                <span><a href="#">ID/PW 찾기</a></span>
+            <div class="login_container">
+                <div class="login">
+                    <input type="text" placeholder="아이디" name="users_id" required>
+                </div>
+                <div class="login">
+                    <input type="password" placeholder="비밀번호" name="users_pwd" required>
+                </div>
+                <button type="submit">로그인</button> <!-- 로그인 버튼 옆으로 가는법 ? -->
             </div>
         </form>
+
+            <div class="container">
+                <div class="root" id="modal_opne_btn">
+                    <span><button type="button">회원가입</button></span> <!-- 회원가입 a태그로 대체 안되나 -->
+                </div>
+                    <span>&nbsp;|&nbsp;</span>
+                    <span><a href="#">ID/PW 찾기</a></span>
+            </div>
+            
+            <?php
+        } else {
+            echo $_SESSION['users_id']; ?> 님 환영합니다.
+            <button type="button" value="logout" onclick="location.href='../users/logout_process.php'">로그아웃</button>
+            <?php
+        }
+        ?>
 
         <!-- 회원가입 modal -->
+        <div id="modal">
 
-        <div id="id01" class="modal">
-        
-        <form action="./users/sign_up_process.php" method="post">
-            <div class="container">
+        <div class="modal_content">
+        <form action="./users/join_process.php" method="post">
+            <div class="join_container">
                 <h1>회원가입</h1>
-                <label>ID</label>
-                <input type="text" name="users_id" required>
-                <label>Password</label>
-                <input type="password" name="users_pwd" required>
-                <label>이메일</label>
-                <input type="text" name="email" required>
-                <label>이름</label>
-                <input type="text" name="users_realname" required>
-                <label>닉네임</label>
-                <input type="text" name="users_nickname" required>
-                <label>학과</label>
-                <input type="text" name="users_department" required>
-            </div>
-            <div class="clearfix">
-                <button type="submit" class="signupbtn">회원가입</button>
+                <div class="join_row">
+                    <label>ID</label>
+                    <input type="text" name="users_id" required>
+                </div>
+                <div class="join_row">
+                    <label>Password</label>
+                    <input type="password" name="users_pwd" required>
+                </div>
+                <div class="join_row">    
+                    <label>이메일</label>
+                    <input type="text" name="email" required>
+                </div>
+                <div class="join_row">
+                    <label>이름</label>
+                    <input type="text" name="users_realname" required>
+                </div>
+                <div class="join_row">
+                    <label>닉네임</label>
+                    <input type="text" name="users_nickname" required>
+                </div>
+                <div class="join_row">
+                    <label>학과</label>
+                    <input type="text" name="users_department" required>
+                </div>
+                <div class="clearfix">
+                    <button type="submit" class="join_btn">회원가입</button>
+                </div>
             </div>
         </form>
-
+        <button type="button" id="modal_close_btn">닫기</button>
         </div>
+        
+        <div class="modal_layer"></div>
+        </div>
+
         
         <!-- new_section  -->
         <!-- article -->
@@ -113,17 +149,29 @@
 
       <!-- footer -->
 
+      <script src='./js/join.js'></script>
 </body>
 </html>
 
+
+
 <!--
     해야할 것
-    회원가입 창 modal 하기
+    
 
     ------------------------------------------------------------------
+    수정사항 
 
     1. nav에 dropbtn은 button class로 두었고 css적용에 따라 클릭시 바로 이동은 안됨 a태그로 바꾸거나, css를 dropbtn hover 시 커서가 클릭으로 바꾸거 해서 링크이동하게 하거나.
     
     2. 회원가입, id/pw찾기 를 label로 두어야? a태그로만 두어야?
         sapn으로 둔 다음 a태그 두어야?
+
+    3. 회원가입을 a태그로 만들 고 js실행되게 하고싶음
+
+    ------------------------------------------------------------------
+    정리
+    
+    1. input type button 과 button type button 의 차이
+
 -->
