@@ -27,7 +27,7 @@ require "../util/loginchk.php";
 
         <!-- nav -->
         <div class="navbar">
-            <a href="./home.php">홈</a>
+            <a href="../home.php">홈</a>
                 <div class="dropdown">
                     <button class="dropbtn">커뮤니티</button>
                     <div class="dropdown-content">

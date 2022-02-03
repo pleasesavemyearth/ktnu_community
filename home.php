@@ -82,7 +82,7 @@ require_once './util/loginchk.php';
         } else {
             ?>
             <div class=login_welcome>
-            <?=$_SESSION['users_id'];?> 님 환영합니다.
+            <?=$_SESSION['users_id'];?> 님 환영합니다.<?=$users_id?>
             <button type="button" value="logout" onclick="location.href='../users/logout_process.php'">로그아웃</button>
             </div>
             <?php
