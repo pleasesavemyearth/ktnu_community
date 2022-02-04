@@ -132,14 +132,11 @@ require "../util/loginchk.php";
 
 
         <!-- article -->
-        <div class="notice_aritcle">
-            공지사항
+        <div class="left_content">
+            커뮤니티
             <hr style="width:200px">
-            글내용1<br>
-            글내용1<br>
-            글내용1<br>
-            글내용1<br>
-            글내용1
+            자유게시판<br>
+            익명게시판
         </div>
 
         <!-- 외부 이미지 링크 -->
@@ -172,7 +169,7 @@ require "../util/loginchk.php";
         <tbody>
             <tr>
                 <td><?=$row['id']?></td>
-                <td><?=$row['title']?></td>
+                <td><a href="free_detailview.php?id=<?=$row['id']?>"><?=$row['title']?></a></td>
                 <td><?=$row['users_id']?></td>
                 <td><?=$row['reg_time']?></td>
                 <td><?=$row['hit']?></td>
@@ -190,5 +187,6 @@ require "../util/loginchk.php";
         $resultset->close();
         $conn->close();
       ?>
+    <script src='../js/join.js'></script>
 </body>
 </html>
