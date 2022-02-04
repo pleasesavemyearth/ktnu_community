@@ -81,7 +81,7 @@ require "../util/loginchk.php";
         } else {
             ?>
             <div class=login_welcome>
-            <?=$_SESSION['users_id'];?> 님 환영합니다.
+            <?=$_SESSION['users_id'];?> 님 환영합니다. 
             <button type="button" value="logout" onclick="location.href='../users/logout_process.php'">로그아웃</button>
             </div>
             <?php
@@ -148,13 +148,47 @@ require "../util/loginchk.php";
 
         <!---------- content ---------->
         <!-- write_list -->
+        <?php
+            $sql="SELECT * FROM free_board";
+            $resultset=$conn->query($sql);
+        ?>
         <h1>자유게시판</h1>
         <h6>자유롭게 글을 작성해보아요</h6>
         <hr style="width:50%">
-        번호 제목 글쓴이 날짜 조회수 추천수<br>
-        pagination 글 목록은 15개씩, 10페이지네이션<br>
+        <table class="list">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>글쓴이</th>
+                <th>날짜</th>
+                <th>조회</th>
+                <th>추천</th>
+            </tr>
+        </thead>
+        <?php
+            while($row=$resultset->fetch_array()){
+        ?>
+        <tbody>
+            <tr>
+                <td><?=$row['id']?></td>
+                <td><?=$row['title']?></td>
+                <td><?=$row['users_id']?></td>
+                <td><?=$row['reg_time']?></td>
+                <td><?=$row['hit']?></td>
+                <td><?=$row['thump_up']?></td>
+            </tr>
+        </tbody>
+        <?php
+        }
+        ?>
+        </table>
         <button type="button" onclick="location.href='./free_regist.php'">글쓰기</button>
 
       <!---------- footer ---------->
+      <?php
+        $resultset->close();
+        $conn->close();
+      ?>
 </body>
 </html>

@@ -2,7 +2,7 @@
 require "../util/dbconfig.php";
 require "../util/loginchk.php";
 if($chk_login) {
-$user=$_SESSION['user'];
+$users_id=$_SESSION['users_id'];
 $title=$_POST['title'];
 $contents=$_POST['contents'];
 
@@ -18,3 +18,7 @@ header('Location: ../free_board/free_list.php');
     header('Location: ../home.php');
 }
 ?>
+
+<!-- 
+    users tbl의 users_id 와 글 등록시 등록되는 free_board tbl의 users col명이 같아야? ㅇㅇ같아야 글 등록이 됨
+ -->

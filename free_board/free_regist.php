@@ -148,7 +148,7 @@ require "../util/loginchk.php";
         <!-- regist_form -->
         <h1>자유게시판</h1>
         <form action="./free_registprocess.php" method="post">
-        <input type="text" name="users_id" value="<?=$users_id?>"/>
+        <!-- <input type="text" name="users_id" value="<?=$users_id?>"/> 이 구문 오류나는데 없어도 글 등록은 된다..?-->
         <input type="text" name="title" placeholder="제목을 입력해주세요." required><br>
         <textarea name="contents" rows="10" cols="50" required></textarea><br>
         <input type="submit" value="등록">

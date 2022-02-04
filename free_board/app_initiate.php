@@ -11,11 +11,11 @@ $sql = "CREATE TABLE IF NOT EXISTS free_board (
     id INT(6) NOT NULL AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     contents TEXT NOT NULL,
-    user VARCHAR(50) NOT NULL,
+    users_id VARCHAR(50) NOT NULL,
     reg_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     hit INT(6) NOT NULL,
-    thump_up INT(6) NOT NULL,
+    thump_up INT(6) NOT NULL, 
     PRIMARY KEY(`id`) 
     ) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci";
     
