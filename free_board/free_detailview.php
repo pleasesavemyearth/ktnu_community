@@ -31,7 +31,7 @@ require "../util/loginchk.php";
                 <div class="dropdown">
                     <button class="dropbtn">커뮤니티</button>
                     <div class="dropdown-content">
-                        <a href="./free_board/free_list.php">자유게시판</a>
+                        <a href="./free_list.php">자유게시판</a>
                         <a href="#">익명게시판</a>
                     </div>
                 </div>
@@ -148,9 +148,12 @@ require "../util/loginchk.php";
         <!-- 본문 -->
         <?php
             $id = $_GET['id'];
+            
+            // hit update
+            $sql="UPDATE free_board SET hit=hit+1 WHERE id = ".$id;
+            $conn->query($sql);
 
             $sql="SELECT title, users_id, reg_time, hit, thump_up, contents FROM free_board WHERE id = ".$id;
-
             $result=$conn->query($sql);
             $row=$result->fetch_array();
         ?>
@@ -186,37 +189,51 @@ require "../util/loginchk.php";
                 </div>
             </div>
 
-        <!-- 댓글보기 -->
+        <!-- 댓글 리스트 -->
+        <?php
+        $sql="SELECT * FROM comment WHERE board_id=".$id;
+        $result=$conn->query($sql);
+        while($row=$result->fetch_array()) {
+            $cmt_id=$row['cmt_id'];
+        ?>
             <div class="view_comment">
                 <div class="cmt_info">
-                    <h4><span class="users_nickname">댓쓴이</span></h4>
+                    <h4><span class="users_nickname"><?=$row['users_id']?></span></h4>
                 </div>
 
                 <div class="cmt_text_box">
-                    <p class="cmt_word">댓글내용</p>
+                    <p class="cmt_word"><?=$row['cmt_contents']?></p>
                 </div>
 
                 <div class="frame">
-                    <span class="date">날짜</span>
-                    <div class="cmt_delete">
-                        <button type="button">삭제</button>
+                    <span class="date"><?=$row['cmt_reg_time']?></span>
+                    <div class="cmt_clear">
+                        <button type="button" onclick="location.href='../comment/cmt_update_process.php?id=<?=$id?>'">수정</button>
+                        <button type="button" onclick="location.href='../comment/cmt_delete_process.php?id=<?=$id?>&cmt_id=<?=$cmt_id?>'">삭제</button>
                     </div>
                 </div>
             </div>
         <hr width="50%">
+        <?php
+        }
+        ?>
 
-        <!-- 댓글입력 -->
+        <!-- 댓글 입력 -->
+        <form action="../comment/cmt_regist_process.php" method="post">
+            <input type="hidden" name="board_id" value="<?=$id?>">
             <div class="cmt_write_box">
                 <div class="cmt_inner_text">
-                    <textarea cols="100" rows="5" maxlength="400"></textarea>
+                    <textarea name="cmt_contents" cols="100" rows="5" maxlength="400"></textarea>
                 </div>
 
                 <div class="cmt_clear">
                     <div class="frame_right">
-                        <button type="button">등록</button>
+                        <!-- <button type="button" onclick="location.href='../comment/cmt_regist_process.php'">등록</button> method가 post법이 아니라서 ? 그럼 이건 못쓰는 건가-->
+                        <input type="submit" value="등록">
                     </div>
                 </div>
             </div>
+        </form>
         </section>
 
       <!---------- footer ---------->
@@ -226,3 +243,7 @@ require "../util/loginchk.php";
       <script src='./js/join.js'></script>
 </body>
 </html>
+
+<!-- 
+    댓글이 한개씩만 나오는 경우 -> 반복문 지정 안해줫기 때문..;;
+-->

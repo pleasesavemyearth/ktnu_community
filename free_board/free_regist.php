@@ -158,7 +158,7 @@ require "../util/loginchk.php";
       <!---------- footer ---------->
       <?php
         }
-        ?>
+      ?>
       <script src='./js/join.js'></script>
 </body>
 </html>

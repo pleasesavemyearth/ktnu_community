@@ -10,11 +10,11 @@ $dbname = "ktnu";
 
 // connect server
 $conn = new mysqli($servername, $username, $password, $dbname);
-if($conn->connect_error) {
-    echo"<script>alert('DB connection failed')</script>";
-}
-echo "<script>alert('DB connected successfully')</script>";
-?>
+// if($conn->connect_error) {
+//     echo"<script>alert('DB connection failed')</script>";
+// }
+// echo "<script>alert('DB connected successfully')</script>";
+// ?>
 
 <!--
     문제 :
