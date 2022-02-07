@@ -136,7 +136,7 @@ require './util/dbconfig.php';
         <!-- article -->
         <!-- 공지사항의 글 최신 기준으로 5개만 제목만 불러옴 -->
         <div class="notice_aritcle">
-            공지사항
+            <br>공지사항
             <hr style="width:200px">
         <?php
         $sql="SELECT id, title FROM notice_board ORDER BY id DESC LIMIT 5";
@@ -158,15 +158,15 @@ require './util/dbconfig.php';
         <!-- new_section  -->
         <!-- article -->
         <span>
-        <br>최신글
+        <br><br>최신글
         <hr style="width:200px">
         <?php
-        $sql="SELECT id, title FROM free_board UNION ALL
-              SELECT id, title FROM secret_board UNION ALL
-              SELECT id, title FROM course_board UNION ALL
-              SELECT id, title FROM circle_board UNION ALL
-              SELECT id, title FROM notice_board UNION ALL
-              SELECT id, title FROM help_board";
+        $sql="SELECT id, title, reg_time FROM free_board UNION ALL
+              SELECT id, title, reg_time FROM secret_board UNION ALL
+              SELECT id, title, reg_time FROM course_board UNION ALL
+              SELECT id, title, reg_time FROM circle_board UNION ALL
+              SELECT id, title, reg_time FROM notice_board UNION ALL
+              SELECT id, title, reg_time FROM help_board ORDER BY reg_time DESC LIMIT 10"; // 글 수정시엔 last_time 컬럼을 따로 넣었기 때문에 수정 필요
         $resultset=$conn->query($sql);
         while($row=$resultset->fetch_array()) {
         ?>
@@ -180,24 +180,29 @@ require './util/dbconfig.php';
         <!-- hit_best_section -->
         <!-- article -->
         <span>
-        조회수 BEST
+        <br>조회수 BEST
         <hr style="width:200px">
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
+        <?php
+        $sql="SELECT id, title, hit FROM free_board UNION ALL
+              SELECT id, title, hit FROM secret_board UNION ALL
+              SELECT id, title, hit FROM course_board UNION ALL
+              SELECT id, title, hit FROM circle_board UNION ALL
+              SELECT id, title, hit FROM notice_board UNION ALL
+              SELECT id, title, hit FROM help_board ORDER BY hit DESC LIMIT 10"; // a태그 걸려면 어떻게..?
+        $resultset=$conn->query($sql);
+        while($row=$resultset->fetch_array()) {
+        ?>
+
+        <td><?=$row['title']?></td><br> 
+        <?php 
+            } 
+        ?>
         </span>
 
         <!-- thumb_up_best_section -->
         <!-- article -->
         <span>
-        추천수 BEST
+        <br>추천수 BEST
         <hr style="width:200px">
         글내용1<br>
         글내용1<br>
@@ -209,10 +214,10 @@ require './util/dbconfig.php';
         <!-- free_section -->
         <!-- article -->
         <span>
-        자유게시판
+        <br>자유게시판
         <hr style="width:200px">
         <?php
-        $sql="SELECT id, title FROM free_board";
+        $sql="SELECT id, title FROM free_board ORDER BY id DESC LIMIT 5";
         $resultset=$conn->query($sql);
         while($row=$resultset->fetch_array()) {
         ?>
@@ -225,10 +230,10 @@ require './util/dbconfig.php';
         <!-- secret_section -->
         <!-- article -->
         <span>
-        익명게시판
+        <br>익명게시판
         <hr style="width:200px">
         <?php
-        $sql="SELECT id, title FROM secret_board";
+        $sql="SELECT id, title FROM secret_board ORDER BY id DESC LIMIT 5";
         $resultset=$conn->query($sql);
         while($row=$resultset->fetch_array()) {
         ?>
