@@ -1,7 +1,6 @@
 <?php
 require "../util/dbconfig.php";
 require "../util/loginchk.php";
-require "../util/utility.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +12,7 @@ require "../util/utility.php";
     <title>Document</title>
 </head>
 <body>
-        <!---------- header ---------->
+    <!---------- header ---------->
         <!-- logo -->
         <a href="#"><img src="../img/cat.jpg" width="150" height="70"></a>
 
@@ -33,21 +32,21 @@ require "../util/utility.php";
                     <button class="dropbtn">커뮤니티</button>
                     <div class="dropdown-content">
                         <a href="./free_list.php">자유게시판</a>
-                        <a href="../secret_board/secret_list.php">익명게시판</a>
+                        <a href="#">익명게시판</a>
                     </div>
                 </div>
                 <div class="dropdown">
                     <button class="dropbtn">정보</button>
                     <div class="dropdown-content">
-                        <a href="../course_board/course_list.php">강의정보</a>
-                        <a href="../circle_board/circle_list.php">동아리</a>
+                        <a href="#">강의정보</a>
+                        <a href="#">동아리</a>
                     </div>
                 </div>
                 <div class="dropdown">
                     <button class="dropbtn">안내</button>
                     <div class="dropdown-content">
-                        <a href="../notice_board/notice_list.php">공지사항</a>
-                        <a href="../help_board/help_list.php">문의사항/건의</a>
+                        <a href="#">공지사항</a>
+                        <a href="#">문의사항/건의</a>
                     </div>
                 </div>
         </div>
@@ -82,12 +81,10 @@ require "../util/utility.php";
         } else {
             ?>
             <div class=login_welcome>
-            <?=$_SESSION['users_id'];?> 님 환영합니다. 
+            <?=$_SESSION['users_id'];?> 님 환영합니다.
             <button type="button" value="logout" onclick="location.href='../users/logout_process.php'">로그아웃</button>
             </div>
-            <?php
-        }
-        ?>
+
 
         <!-- join modal -->
         <div id="modal">
@@ -134,10 +131,10 @@ require "../util/utility.php";
 
         <!-- article -->
         <div class="left_content">
-            커뮤니티
+            정보
             <hr style="width:200px">
-            자유게시판<br>
-            익명게시판
+            강의정보<br>
+            동아리
         </div>
 
         <!-- 외부 이미지 링크 -->
@@ -145,51 +142,107 @@ require "../util/utility.php";
         <a href="https://www.instagram.com/best_knut/?hl=ko" target="_blank"><img src="../img/insta_icon.PNG"></a>
 
         <!---------- content ---------->
-        <!-- write_list -->
+        <h1>강의정보</h1>
+        <hr width="50%">
+
+        <!-- 본문 -->
         <?php
-            // $sql="SELECT * FROM free_board where category_name=".$category_name;  
-            // $sql="SELECT * FROM ".$_GET['category_name'];
-            $sql="SELECT * FROM free_board";
-            $resultset=$conn->query($sql);
+            $id = $_GET['id'];
+            
+            // hit update
+            $sql="UPDATE course_board SET hit=hit+1 WHERE id = ".$id;
+            $conn->query($sql);
+
+            $sql="SELECT title, users_id, reg_time, hit, contents FROM course_board WHERE id = ".$id;
+            $result=$conn->query($sql);
+            $row=$result->fetch_array();
         ?>
-        <h1>자유게시판</h1>
-        <h6>자유롭게 글을 작성해보아요</h6>
-        <hr style="width:50%">
-        <table class="list">
-        <thead>
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>글쓴이</th>
-                <th>날짜</th>
-                <th>조회</th>
-                <th>추천</th>
-            </tr>
-        </thead>
+        <section>
+            <div class="view_content_wrap">
+                <div class="title_head">
+                    <h4 class="title_word">
+                        <span class="title"><?=$row['title']?></span>
+                    </h4>
+                </div>
+
+                <div class="writer_head">
+                    <div class="frame_left">
+                        <span class="users_nickname"><?=$row['users_id']?></span>
+                        <span class="date"><?=$row['reg_time']?></span>
+                    </div>
+                    <div class="frame_right">
+                        <span class="hit">조회 <?=$row['hit']?></span>
+                    </div>
+                </div>
+                <hr width="50%">
+
+                <div class="inner_contents">
+                    <?=$row['contents']?>
+                </div>
+
+                <hr width="50%">
+                <div class="view_clear">
+                    <button type="button" onclick="location.href='./course_update.php?id=<?=$id?>'">수정</button>
+                    <button type="button" onclick="location.href='./course_deleteprocess.php?id=<?=$id?>'">삭제</button>
+                    <button type="button" onclick="location.href='./course_list.php'">목록</button>
+                </div>
+            </div>
+
+        <!-- 댓글 리스트 -->
         <?php
-            while($row=$resultset->fetch_array()){
+        $sql="SELECT * FROM comment WHERE board_id=".$id;
+        $result=$conn->query($sql);
+        while($row=$result->fetch_array()) {
+            $cmt_id=$row['cmt_id'];
         ?>
-        <tbody>
-            <tr>
-                <td><?=$row['id']?></td>
-                <td><a href="free_detailview.php?id=<?=$row['id']?>"><?=$row['title']?></a></td>
-                <td><?=$row['users_id']?></td>
-                <td><?=$row['reg_time']?></td>
-                <td><?=$row['hit']?></td>
-                <td><?=$row['thump_up']?></td>
-            </tr>
-        </tbody>
+            <div class="view_comment">
+                <div class="cmt_info">
+                    <h4><span class="users_nickname"><?=$row['users_id']?></span></h4>
+                </div>
+
+                <div class="cmt_text_box">
+                    <p class="cmt_word"><?=$row['cmt_contents']?></p>
+                </div>
+
+                <div class="frame">
+                    <span class="date"><?=$row['cmt_reg_time']?></span>
+                    <div class="cmt_clear">
+                        <button type="button" onclick="location.href='../comment/cmt_update_process.php?id=<?=$id?>'">수정</button>
+                        <button type="button" onclick="location.href='../comment/cmt_delete_process.php?id=<?=$id?>&cmt_id=<?=$cmt_id?>'">삭제</button>
+                    </div>
+                </div>
+            </div>
+        <hr width="50%">
         <?php
         }
         ?>
-        </table>
-        <button type="button" onclick="location.href='./free_regist.php'">글쓰기</button>
+
+        <!-- 댓글 입력 -->
+        <form action="../comment/cmt_regist_process.php" method="post">
+            <input type="hidden" name="board_id" value="<?=$id?>">
+            <div class="cmt_write_box">
+                <div class="cmt_inner_text">
+                    <textarea name="cmt_contents" cols="100" rows="5" maxlength="400"></textarea>
+                </div>
+
+                <div class="cmt_clear">
+                    <div class="frame_right">
+                        <!-- <button type="button" onclick="location.href='../comment/cmt_regist_process.php'">등록</button> method가 post법이 아니라서 ? 그럼 이건 못쓰는 건가-->
+                        <input type="submit" value="등록">
+                    </div>
+                </div>
+            </div>
+        </form>
+        </section>
 
       <!---------- footer ---------->
       <?php
-        $resultset->close();
-        $conn->close();
-      ?>
-    <script src='../js/join.js'></script>
+        }
+        ?>
+      <script src='./js/join.js'></script>
 </body>
 </html>
+
+<!-- 
+    댓글이 한개씩만 나오는 경우 -> 반복문 지정 안해줫기 때문..;;
+-->

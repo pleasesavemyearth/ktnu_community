@@ -1,7 +1,6 @@
 <?php
 require "../util/dbconfig.php";
 require "../util/loginchk.php";
-require "../util/utility.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +12,7 @@ require "../util/utility.php";
     <title>Document</title>
 </head>
 <body>
-        <!---------- header ---------->
+    <!---------- header ---------->
         <!-- logo -->
         <a href="#"><img src="../img/cat.jpg" width="150" height="70"></a>
 
@@ -32,22 +31,22 @@ require "../util/utility.php";
                 <div class="dropdown">
                     <button class="dropbtn">커뮤니티</button>
                     <div class="dropdown-content">
-                        <a href="./free_list.php">자유게시판</a>
-                        <a href="../secret_board/secret_list.php">익명게시판</a>
+                        <a href="./free_board/free_list.php">자유게시판</a>
+                        <a href="#">익명게시판</a>
                     </div>
                 </div>
                 <div class="dropdown">
                     <button class="dropbtn">정보</button>
                     <div class="dropdown-content">
-                        <a href="../course_board/course_list.php">강의정보</a>
-                        <a href="../circle_board/circle_list.php">동아리</a>
+                        <a href="#">강의정보</a>
+                        <a href="#">동아리</a>
                     </div>
                 </div>
                 <div class="dropdown">
                     <button class="dropbtn">안내</button>
                     <div class="dropdown-content">
-                        <a href="../notice_board/notice_list.php">공지사항</a>
-                        <a href="../help_board/help_list.php">문의사항/건의</a>
+                        <a href="#">공지사항</a>
+                        <a href="#">문의사항/건의</a>
                     </div>
                 </div>
         </div>
@@ -82,12 +81,10 @@ require "../util/utility.php";
         } else {
             ?>
             <div class=login_welcome>
-            <?=$_SESSION['users_id'];?> 님 환영합니다. 
+            <?=$_SESSION['users_id'];?> 님 환영합니다.
             <button type="button" value="logout" onclick="location.href='../users/logout_process.php'">로그아웃</button>
             </div>
-            <?php
-        }
-        ?>
+
 
         <!-- join modal -->
         <div id="modal">
@@ -133,11 +130,14 @@ require "../util/utility.php";
 
 
         <!-- article -->
-        <div class="left_content">
-            커뮤니티
+        <div class="notice_aritcle">
+            공지사항
             <hr style="width:200px">
-            자유게시판<br>
-            익명게시판
+            글내용1<br>
+            글내용1<br>
+            글내용1<br>
+            글내용1<br>
+            글내용1
         </div>
 
         <!-- 외부 이미지 링크 -->
@@ -145,51 +145,30 @@ require "../util/utility.php";
         <a href="https://www.instagram.com/best_knut/?hl=ko" target="_blank"><img src="../img/insta_icon.PNG"></a>
 
         <!---------- content ---------->
-        <!-- write_list -->
-        <?php
-            // $sql="SELECT * FROM free_board where category_name=".$category_name;  
-            // $sql="SELECT * FROM ".$_GET['category_name'];
-            $sql="SELECT * FROM free_board";
-            $resultset=$conn->query($sql);
-        ?>
-        <h1>자유게시판</h1>
-        <h6>자유롭게 글을 작성해보아요</h6>
-        <hr style="width:50%">
-        <table class="list">
-        <thead>
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>글쓴이</th>
-                <th>날짜</th>
-                <th>조회</th>
-                <th>추천</th>
-            </tr>
-        </thead>
-        <?php
-            while($row=$resultset->fetch_array()){
-        ?>
-        <tbody>
-            <tr>
-                <td><?=$row['id']?></td>
-                <td><a href="free_detailview.php?id=<?=$row['id']?>"><?=$row['title']?></a></td>
-                <td><?=$row['users_id']?></td>
-                <td><?=$row['reg_time']?></td>
-                <td><?=$row['hit']?></td>
-                <td><?=$row['thump_up']?></td>
-            </tr>
-        </tbody>
-        <?php
-        }
-        ?>
-        </table>
-        <button type="button" onclick="location.href='./free_regist.php'">글쓰기</button>
+        <!-- regist_form -->
+        <h1>비밀게시판</h1>
+        <form action="./help_registprocess.php" method="post">
+        <!-- <input type="text" name="users_id" value="<?=$users_id?>"/> 이 구문 오류나는데 없어도 글 등록은 된다..?-->
+        <input type="text" name="title" placeholder="제목을 입력해주세요." required><br>
+        <textarea name="contents" rows="10" cols="50" required></textarea><br>
+        <input type="submit" value="등록">
+        <button type="button" value="cancle" onclick="location.href='./help_list.php'">취소</button>
+        </form>
 
       <!---------- footer ---------->
       <?php
-        $resultset->close();
-        $conn->close();
+        }
       ?>
-    <script src='../js/join.js'></script>
+      <script src='./js/join.js'></script>
 </body>
 </html>
+
+<!-- 
+    문제 :
+    undefined variable $users_id
+    post방식으로 free_registprocess.php 로 넘겨주는데,
+    users_id, title, contents 값들을 넘겨줄것이다.
+    그런데 users_id 변수가 정의되지 않음
+    -> loginchk if문 문제 ? registprocess.php를 만들지않아서?
+    로그인이 성공했으면 로그인한 사용자의 id가 떠야 하는데..
+-->

@@ -1,20 +1,19 @@
 <?php
-require_once './util/utility.php';
-require_once './util/loginchk.php';
-require './util/dbconfig.php';
+require "../util/dbconfig.php";
+require "../util/loginchk.php";
+require "../util/utility.php";
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
-    <title>ktnu-people</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Document</title>
 </head>
 <body>
-      <!---------- header ---------->
+        <!---------- header ---------->
         <!-- logo -->
         <a href="#"><img src="../img/cat.jpg" width="150" height="70"></a>
 
@@ -29,7 +28,7 @@ require './util/dbconfig.php';
 
         <!-- nav -->
         <div class="navbar">
-            <a href="./home.php">홈</a>
+            <a href="../home.php">홈</a>
                 <div class="dropdown">
                     <button class="dropbtn">커뮤니티</button>
                     <div class="dropdown-content">
@@ -40,7 +39,7 @@ require './util/dbconfig.php';
                 <div class="dropdown">
                     <button class="dropbtn">정보</button>
                     <div class="dropdown-content">
-                        <a href="../course_board/course_list.php">강의정보</a>
+                        <a href="./course_list.php">강의정보</a>
                         <a href="../circle_board/circle_list.php">동아리</a>
                     </div>
                 </div>
@@ -83,7 +82,7 @@ require './util/dbconfig.php';
         } else {
             ?>
             <div class=login_welcome>
-            <?=$_SESSION['users_id'];?> 님 환영합니다.
+            <?=$_SESSION['users_id'];?> 님 환영합니다. 
             <button type="button" value="logout" onclick="location.href='../users/logout_process.php'">로그아웃</button>
             </div>
             <?php
@@ -134,142 +133,61 @@ require './util/dbconfig.php';
 
 
         <!-- article -->
-        <!-- 공지사항의 글 최신 기준으로 5개만 제목만 불러옴 -->
-        <div class="notice_aritcle">
-            공지사항
+        <div class="left_content">
+            정보
             <hr style="width:200px">
-        <?php
-        $sql="SELECT id, title FROM notice_board ORDER BY id DESC LIMIT 5";
-        $resultset=$conn->query($sql);
-        while($row=$resultset->fetch_array()) {
-        ?>
-
-        <td><a href="./notice_board/notice_detailview.php?id=<?=$row['id']?>"><?=$row['title']?></a></td><br> 
-        <?php 
-            } 
-        ?>
+            강의정보<br>
+            동아리
         </div>
 
         <!-- 외부 이미지 링크 -->
-        <a href="https://ko-kr.facebook.com/knutpr/" target="_blank"><img src="./img/facebook_icon.PNG"></a>
-        <a href="https://www.instagram.com/best_knut/?hl=ko" target="_blank"><img src="./img/insta_icon.PNG"></a>
+        <a href="https://ko-kr.facebook.com/knutpr/" target="_blank"><img src="../img/facebook_icon.PNG"></a>
+        <a href="https://www.instagram.com/best_knut/?hl=ko" target="_blank"><img src="../img/insta_icon.PNG"></a>
 
         <!---------- content ---------->
-        <!-- new_section  -->
-        <!-- article -->
-        <span>
-        <br>최신글
-        <hr style="width:200px">
+        <!-- write_list -->
         <?php
-        $sql="SELECT id, title FROM free_board UNION ALL
-              SELECT id, title FROM secret_board UNION ALL
-              SELECT id, title FROM course_board UNION ALL
-              SELECT id, title FROM circle_board UNION ALL
-              SELECT id, title FROM notice_board UNION ALL
-              SELECT id, title FROM help_board";
-        $resultset=$conn->query($sql);
-        while($row=$resultset->fetch_array()) {
+            // $sql="SELECT * FROM free_board where category_name=".$category_name;  
+            // $sql="SELECT * FROM ".$_GET['category_name'];
+            $sql="SELECT * FROM course_board";
+            $resultset=$conn->query($sql);
         ?>
-
-        <td><?=$row['title']?></td><br> 
-        <?php 
-            } 
-        ?>
-        </span>
-
-        <!-- hit_best_section -->
-        <!-- article -->
-        <span>
-        조회수 BEST
-        <hr style="width:200px">
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        </span>
-
-        <!-- thumb_up_best_section -->
-        <!-- article -->
-        <span>
-        추천수 BEST
-        <hr style="width:200px">
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        글내용1<br>
-        </span>
-
-        <!-- free_section -->
-        <!-- article -->
-        <span>
-        자유게시판
-        <hr style="width:200px">
+        <h1>강의정보</h1>
+        <h6>자유롭게 글을 작성해보아요</h6>
+        <hr style="width:50%">
+        <table class="list">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>글쓴이</th>
+                <th>날짜</th>
+                <th>조회</th>
+            </tr>
+        </thead>
         <?php
-        $sql="SELECT id, title FROM free_board";
-        $resultset=$conn->query($sql);
-        while($row=$resultset->fetch_array()) {
+            while($row=$resultset->fetch_array()){
         ?>
-        <td><a href="./free_board/free_detailview.php?id=<?=$row['id']?>"><?=$row['title']?></a></td><br>
-        <?php 
-            }
-        ?>
-        </span>
-
-        <!-- secret_section -->
-        <!-- article -->
-        <span>
-        익명게시판
-        <hr style="width:200px">
+        <tbody>
+            <tr>
+                <td><?=$row['id']?></td>
+                <td><a href="course_detailview.php?id=<?=$row['id']?>"><?=$row['title']?></a></td>
+                <td><?=$row['users_id']?></td>
+                <td><?=$row['reg_time']?></td>
+                <td><?=$row['hit']?></td>
+            </tr>
+        </tbody>
         <?php
-        $sql="SELECT id, title FROM secret_board";
-        $resultset=$conn->query($sql);
-        while($row=$resultset->fetch_array()) {
+        }
         ?>
-        <td><a href="./secret_board/secret_detailview.php?id=<?=$row['id']?>"><?=$row['title']?></a></td><br>
-        <?php 
-            }
-        ?>
-        </span>
-
+        </table>
+        <button type="button" onclick="location.href='./course_regist.php'">글쓰기</button>
 
       <!---------- footer ---------->
-
-      <script src='./js/join.js'></script>
+      <?php
+        $resultset->close();
+        $conn->close();
+      ?>
+    <script src='../js/join.js'></script>
 </body>
 </html>
-
-
-
-<!--
-    해야할 것
-    
-
-    ------------------------------------------------------------------
-    수정사항 
-
-    1. nav에 dropbtn은 button class로 두었고 css적용에 따라 클릭시 바로 이동은 안됨 a태그로 바꾸거나, css를 dropbtn hover 시 커서가 클릭으로 바꾸거 해서 링크이동하게 하거나.
-    
-    2. 회원가입, id/pw찾기 를 label로 두어야? a태그로만 두어야?
-        sapn으로 둔 다음 a태그 두어야?
-
-    3. 회원가입을 a태그로 만들 고 js실행되게 하고싶음
-
-    ------------------------------------------------------------------
-    정리
-    
-    1. input type button 과 button type button 의 차이
-
-    ------------------------------------------------------------------
-    오답노트
-
-    1. home.php 메인화면 공지사항 article에 글 불러오는 sql문 작성 시, select id, title from notice_board 로 작성 즉, 해당하는 id의 글로 이동해야 하기 때문에 id값도 select해줬어야 했는데 id를 안써서 에러났었음
-
-
--->

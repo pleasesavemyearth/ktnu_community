@@ -1,4 +1,5 @@
 <?php
+
 // 사용자 ip를 가져오는 함수 get_client_ip() 생성
 function get_client_ip() {
     $ipaddress = '';
@@ -18,5 +19,16 @@ function get_client_ip() {
         $ipaddress = 'UNKNOWN'; 
 return $ipaddress;
 }
+
+// 게시판 관리자 정보를 읽어오는 함수
+function setup($conn){
+    global $category_name;
+
+    $sql = "SELECT * FROM board_admin WHERE category_name = ".$category_name;
+    $result = $conn->query($sql);
+    $data = mysqli_fetch_array($result);
+
+    return $data;
+ }
 
 ?>
